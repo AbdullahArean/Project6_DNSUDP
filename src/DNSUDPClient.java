@@ -5,18 +5,21 @@ import java.net.InetAddress;
 import java.net.SocketException;
 import java.util.Scanner;
 public class DNSUDPClient {
+    private static Scanner scanner;
 
     public static void main(String[] args) {
         try {
+            // Continuously receive input from the user
+            scanner = new Scanner(System.in);
             // Create a UDP socket
             DatagramSocket clientSocket = new DatagramSocket();
-
+            System.out.print("Give The IP Address of The DNS Server: ->");
             // Get the server's address and port
-            InetAddress address = InetAddress.getByName("127.0.0.1");
-            int port = 12345;
+            InetAddress address = InetAddress.getByName(scanner.nextLine());
+            System.out.print("Give The Port of The DNS Server: ->");
+            int port = Integer.parseInt(scanner.nextLine());
 
-            // Continuously receive input from the user
-            Scanner scanner = new Scanner(System.in);
+
             while (true) {
                 System.out.print("Enter a domain name to resolve: ");
                 String data = scanner.nextLine();

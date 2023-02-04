@@ -1,23 +1,21 @@
 import java.io.IOException;
-import java.net.DatagramPacket;
-import java.net.DatagramSocket;
-import java.net.SocketException;
+import java.net.*;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class DNSUDPServer {
-    private static Map<String, String> dnsTable = new HashMap<>();
 
     public static void main(String[] args) {
         try {
+            //Select a Random Port Number
+            int port = ThreadLocalRandom.current().nextInt(1000, 9999);
             // Create a UDP socket
-            DatagramSocket serverSocket = new DatagramSocket(12345);
+            DatagramSocket serverSocket = new DatagramSocket(port);
+            System.out.println("DNS Resolution Server started....\nServer IP: "+getIP()+ " Server Port: "+port);
+            System.out.println("Waiting for Continuously receive requests from clients ...");
 
-            // Populate the DNS table
-            dnsTable.put("www.google.com", "216.58.194.174");
-            dnsTable.put("www.facebook.com", "31.13.77.36");
-            dnsTable.put("www.amazon.com", "52.95.245.222");
-            dnsTable.put("www.apple.com", "17.142.160.59");
 
             // Continuously receive requests from clients
             while (true) {
@@ -27,43 +25,33 @@ public class DNSUDPServer {
                 serverSocket.receive(receivePacket);
 
                 // Start a new thread to handle the request
-                new Thread(new ClientHandler(serverSocket, receivePacket)).start();
+                new Thread(new DNSUDPHandler(serverSocket, receivePacket)).start();
+            }
+        } catch (Exception e) {
+            System.out.println("Server Failed : " + e.getMessage());
+        }
+    }
+    private static String getIP(){
+        String ip=null;
+        try {
+            Enumeration<NetworkInterface> interfaces = NetworkInterface.getNetworkInterfaces();
+            while (interfaces.hasMoreElements()) {
+                NetworkInterface iface = interfaces.nextElement();
+                if (iface.isLoopback() || !iface.isUp())
+                    continue;
+
+                Enumeration<InetAddress> addresses = iface.getInetAddresses();
+                while(addresses.hasMoreElements()) {
+                    InetAddress addr = addresses.nextElement();
+                    if (addr instanceof Inet6Address) continue;
+                    ip = addr.getHostAddress();
+                }
             }
         } catch (SocketException e) {
-            System.out.println("SocketException: " + e.getMessage());
-        } catch (IOException e) {
-            System.out.println("IOException: " + e.getMessage());
+            System.out.println(e);
         }
+        return ip;
     }
 
-    private static class ClientHandler implements Runnable {
-        private DatagramSocket serverSocket;
-        private DatagramPacket receivePacket;
 
-        public ClientHandler(DatagramSocket serverSocket, DatagramPacket receivePacket) {
-            this.serverSocket = serverSocket;
-            this.receivePacket = receivePacket;
-        }
-
-        @Override
-        public void run() {
-            try {
-                // Get the domain name from the request
-                String domainName = new String(receivePacket.getData(), 0, receivePacket.getLength());
-
-                // Look up the IP address in the DNS table
-                String ipAddress = dnsTable.get(domainName);
-                if (ipAddress == null) {
-                    ipAddress = "Domain not found";
-                }
-
-                // Send the response to the client
-                byte[] sendData = ipAddress.getBytes();
-                DatagramPacket sendPacket = new DatagramPacket(sendData, sendData.length, receivePacket.getAddress(), receivePacket.getPort());
-                serverSocket.send(sendPacket);
-            } catch (IOException e) {
-                System.out.println("IOException: " + e.getMessage());
-            }
-        }
-    }
 }
