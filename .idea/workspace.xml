@@ -5,11 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7428d64f-f959-4b39-a51c-07efcb12de00" name="Changes" comment="Server Handler Implemented with Random Port Number">
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/DNSUDPClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DNSUDPClient.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/DNSUDPHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DNSUDPHandler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/DNSUDPServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DNSUDPServer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -30,7 +29,7 @@
     <option name="stateVersion" value="1" />
   </component>
   <component name="ProblemsViewState">
-    <option name="selectedTabId" value="ProjectErrors" />
+    <option name="selectedTabId" value="CurrentFile" />
   </component>
   <component name="ProjectId" id="2LHM7SQ6WsePMbaTxKjOoRHS2JR" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -44,6 +43,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "WebServerToolWindowFactoryState": "false",
+    "last_opened_file_path": "C:/Users/abdul/Documents/GitHub/Project6_DNSUDP",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -53,12 +53,15 @@
   }
 }]]></component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\abdul\Documents\GitHub\Project6_DNSUDP" />
+    </key>
     <key name="MoveMembersDialog.RECENTS_KEY">
       <recent name="DNSUDPClientHandler" />
     </key>
   </component>
   <component name="RunManager" selected="Application.DNSUDPClient">
-    <configuration name="DNSUDPClient" type="Application" factoryName="Application" singleton="false" temporary="true" nameIsGenerated="true">
+    <configuration name="DNSUDPClient" type="Application" factoryName="Application" singleton="true" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="DNSUDPClient" />
       <module name="Project6_DNSUDP" />
       <method v="2">
@@ -92,6 +95,7 @@
       <option name="presentableId" value="Default" />
       <updated>1675523388808</updated>
       <workItem from="1675523390345" duration="3890000" />
+      <workItem from="1675566080342" duration="15940000" />
     </task>
     <task id="LOCAL-00001" summary="Server Handler Implemented with Random Port Number">
       <created>1675527380944</created>
@@ -105,6 +109,17 @@
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Server Handler Implemented with Random Port Number" />
