@@ -74,12 +74,29 @@ public class DnsRecord {
             String[] parts = line.split(" ");
             String name = parts[0];
             String value = parts[1];
-            short type = Short.parseShort(parts[2]);
-            short ttl = Short.parseShort(parts[3]);
+            short type =1;
+            switch (parts[2]){
+                case "A":
+                    type = 1;
+                    break;
+                case "AAAA":
+                    type = 2;
+                    break;
+                default:
+                    type = 9;
+            }
+            short ttl = 60;
             records[count] = new DnsRecord(name, value, type, ttl);
             count++;
         }
         br.close();
         return records;
+    }
+
+    public static void main(String[] args) throws IOException {
+//        DnsRecord[] localstorage = readRecordsFromFile("dns_records_auth.txt");
+//        for(int i=0; i<localstorage.length; i++){
+//            System.out.println(localstorage[i].toString());
+//        }
     }
 }

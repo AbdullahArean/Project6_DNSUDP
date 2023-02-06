@@ -20,8 +20,8 @@ public class DNSUDPHandler implements Runnable {
         try {
             String domainName = new String(receivePacket.getData(), 0, receivePacket.getLength());
             localstorage = DnsRecord.readRecordsFromFile("dns_records_auth.txt");
-            byte[] sendData = handleDnsRequest(domainName.getBytes());
             System.out.println("Request Received:["+System.currentTimeMillis()+"] "+domainName);
+            byte[] sendData = handleDnsRequest(domainName.getBytes());
             DatagramPacket sendPacket = new DatagramPacket(sendData, sendData.length, receivePacket.getAddress(), receivePacket.getPort());
             serverSocket.send(sendPacket);
         } catch (Exception e) {
@@ -39,13 +39,6 @@ public class DNSUDPHandler implements Runnable {
     short authorities = requestBuffer.getShort();
     short additionals = requestBuffer.getShort();
 
-    System.out.println("Transaction ID: " + transactionID);
-    System.out.println("Flags: " + flags);
-    System.out.println("Questions: " + questions);
-    System.out.println("Answers: " + answers);
-    System.out.println("Authorities: " + authorities);
-    System.out.println("Additionals: " + additionals);
-
     // Read questions
     for (int i = 0; i < questions; i++) {
         // Read name
@@ -59,15 +52,15 @@ public class DNSUDPHandler implements Runnable {
             length = requestBuffer.get() & 0xff;
         }
         System.out.println(hostname);
-        boolean found = false;
-        short type_st = 0;
-        short ttl_st = 0;
-        String ipaddress_st = null;
+        short type_st = 1;
+        short ttl_st = 60;
+        String ipaddress_st = "192.12.12.12";
 //        for (int index = 0; index < localstorage.length; i++) {
 //            if (hostname.equals(localstorage[index].getName())) {
 //                ipaddress_st = localstorage[index].getValue();
 //                type_st = localstorage[index].getType();
 //                ttl_st = localstorage[index].getTtl();
+//                System.out.println("here");
 //            }
 //        }
 
@@ -94,6 +87,7 @@ public class DNSUDPHandler implements Runnable {
             responseBuffer.put(domainPart.getBytes());
         }
         responseBuffer.put((byte) 0x00);
+        responseBuffer.putShort(type_st);responseBuffer.putShort(type_st);responseBuffer.putShort(type_st);
 
 
         responseBuffer.putShort(type_st); // Type A record

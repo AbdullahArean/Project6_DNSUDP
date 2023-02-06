@@ -1,8 +1,5 @@
-import java.io.IOException;
 import java.net.*;
-import java.nio.ByteBuffer;
 import java.util.Enumeration;
-import java.util.concurrent.ThreadLocalRandom;
 
 public class DNSUDPServer {
 
@@ -10,10 +7,11 @@ public class DNSUDPServer {
         try {
             //Select a Random Port Number
             //int port = ThreadLocalRandom.current().nextInt(1000, 9999);
-            int port = 8181;
+            int port = 8182;
             DatagramSocket serverSocket = new DatagramSocket(port);
             System.out.println("DNS Resolution Server started....\nServer IP: "+getIP()+ " Server Port: "+port);
             System.out.println("Waiting for Continuously receive requests from clients ...");
+
             while (true) {
                 byte[] receiveData = new byte[4096];
                 DatagramPacket receivePacket = new DatagramPacket(receiveData, receiveData.length);
