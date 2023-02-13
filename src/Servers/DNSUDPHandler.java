@@ -1,3 +1,4 @@
+package Servers;
 
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
@@ -8,7 +9,7 @@ import java.util.ArrayList;
 public class DNSUDPHandler implements Runnable {
     private final DatagramSocket serverSocket;
     private final DatagramPacket receivePacket;
-    private static DnsRecord[] localstorage;
+//    private static DnsRecord[] localstorage;
 
 
     public DNSUDPHandler(DatagramSocket serverSocket, DatagramPacket receivePacket) {
@@ -19,7 +20,7 @@ public class DNSUDPHandler implements Runnable {
     public void run() {
         try {
             String domainName = new String(receivePacket.getData(), 0, receivePacket.getLength());
-            localstorage = DnsRecord.readRecordsFromFile("dns_records_auth.txt");
+            //localstorage = DnsRecord.readRecordsFromFile("dns_records_auth.txt");
             System.out.println("Request Received:["+System.currentTimeMillis()+"] "+domainName);
             byte[] sendData = handleDnsRequest(domainName.getBytes());
             DatagramPacket sendPacket = new DatagramPacket(sendData, sendData.length, receivePacket.getAddress(), receivePacket.getPort());

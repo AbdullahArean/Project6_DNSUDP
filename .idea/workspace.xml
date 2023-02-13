@@ -4,11 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7428d64f-f959-4b39-a51c-07efcb12de00" name="Changes" comment="Server Handler Implemented with Random Port Number">
+    <list default="true" id="874ad7e0-3916-4a71-9cd4-737cbfd7b688" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/Utils/DNSMessageCreateSendParse.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/DNSUDPClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DNSUDPClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/DNSUDPHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DNSUDPHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/DNSUDPServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DNSUDPServer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DNSUDPClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Clients/DNSUDPClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DNSUDPHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Servers/DNSUDPHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DNSUDPServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Servers/DNSUDPServer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/DnsRecord.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DnsRecord.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -16,124 +17,48 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="FileTemplateManagerImpl">
-    <option name="RECENT_TEMPLATES">
-      <list>
-        <option value="Class" />
-      </list>
-    </option>
-  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="MarkdownSettingsMigration">
-    <option name="stateVersion" value="1" />
-  </component>
-  <component name="ProblemsViewState">
-    <option name="selectedTabId" value="CurrentFile" />
-  </component>
-  <component name="ProjectId" id="2LHM7SQ6WsePMbaTxKjOoRHS2JR" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
-  <component name="ProjectViewState">
-    <option name="hideEmptyMiddlePackages" value="true" />
-    <option name="showLibraryContents" value="true" />
-  </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/abdul/Documents/GitHub/Project6_DNSUDP&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "node.js.selected.package.tslint": "(autodetect)"
   }
-}</component>
-  <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\abdul\Documents\GitHub\Project6_DNSUDP" />
-    </key>
-    <key name="MoveMembersDialog.RECENTS_KEY">
-      <recent name="DNSUDPClientHandler" />
-    </key>
-  </component>
+}]]></component>
   <component name="RunManager" selected="Application.DNSUDPClient">
-    <configuration name="DNSUDPClient" type="Application" factoryName="Application" singleton="true" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="DNSUDPClient" />
+    <configuration name="DNSMessageCreateSendParse" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Utils.DNSMessageCreateSendParse" />
       <module name="Project6_DNSUDP" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="DNSUDPServer" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="DNSUDPServer" />
+    <configuration name="DNSUDPClient" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Clients.DNSUDPClient" />
       <module name="Project6_DNSUDP" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="DnsRecord" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="DnsRecord" />
-      <module name="Project6_DNSUDP" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="Utils.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
     <list>
-      <item itemvalue="Application.DnsRecord" />
+      <item itemvalue="Application.DNSMessageCreateSendParse" />
       <item itemvalue="Application.DNSUDPClient" />
-      <item itemvalue="Application.DNSUDPServer" />
     </list>
     <recent_temporary>
       <list>
         <item itemvalue="Application.DNSUDPClient" />
-        <item itemvalue="Application.DNSUDPServer" />
-        <item itemvalue="Application.DnsRecord" />
+        <item itemvalue="Application.DNSMessageCreateSendParse" />
       </list>
     </recent_temporary>
   </component>
-  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
-    <task active="true" id="Default" summary="Default task">
-      <changelist id="7428d64f-f959-4b39-a51c-07efcb12de00" name="Changes" comment="" />
-      <created>1675523388808</created>
-      <option name="number" value="Default" />
-      <option name="presentableId" value="Default" />
-      <updated>1675523388808</updated>
-      <workItem from="1675523390345" duration="3890000" />
-      <workItem from="1675566080342" duration="15940000" />
-      <workItem from="1675671247945" duration="5276000" />
-    </task>
-    <task id="LOCAL-00001" summary="Server Handler Implemented with Random Port Number">
-      <created>1675527380944</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1675527380944</updated>
-    </task>
-    <option name="localTasksCounter" value="2" />
     <servers />
-  </component>
-  <component name="TypeScriptGeneratedFilesManager">
-    <option name="version" value="3" />
-  </component>
-  <component name="Vcs.Log.Tabs.Properties">
-    <option name="TAB_STATES">
-      <map>
-        <entry key="MAIN">
-          <value>
-            <State />
-          </value>
-        </entry>
-      </map>
-    </option>
-  </component>
-  <component name="VcsManagerConfiguration">
-    <MESSAGE value="Server Handler Implemented with Random Port Number" />
-    <option name="LAST_COMMIT_MESSAGE" value="Server Handler Implemented with Random Port Number" />
   </component>
 </project>
