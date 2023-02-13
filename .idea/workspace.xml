@@ -5,17 +5,25 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="874ad7e0-3916-4a71-9cd4-737cbfd7b688" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/Utils/DNSMessageCreateSendParse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/DNSUDPClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Clients/DNSUDPClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/DNSUDPHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Servers/DNSUDPHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/DNSUDPServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Servers/DNSUDPServer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/DnsRecord.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DnsRecord.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Project6_DNSUDP.iml" beforeDir="false" afterPath="$PROJECT_DIR$/Project6_DNSUDP.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Clients/DNSUDPClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Clients/DNSUDPClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Servers/DNSUDPHandler.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Servers/DNSUDPServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Servers/DNSUDPServer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Utils/DNSMessageCreateSendParse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Utils/DNSMessageCreateSendParse.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -23,17 +31,20 @@
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
-    "node.js.selected.package.tslint": "(autodetect)"
+    "Downloaded.Files.Path.Enabled": "false",
+    "Repository.Attach.Annotations": "false",
+    "Repository.Attach.JavaDocs": "false",
+    "Repository.Attach.Sources": "false",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "settings.editor.selected.configurable": "preferences.lookFeel"
   }
 }]]></component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src" />
+    </key>
+  </component>
   <component name="RunManager" selected="Application.DNSUDPClient">
-    <configuration name="DNSMessageCreateSendParse" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="Utils.DNSMessageCreateSendParse" />
-      <module name="Project6_DNSUDP" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="DNSUDPClient" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Clients.DNSUDPClient" />
       <module name="Project6_DNSUDP" />
@@ -47,14 +58,72 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="DNSUDPServer (2)" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Servers.DNSUDPServer" />
+      <module name="Project6_DNSUDP" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="Servers.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="DNSUDPServer (3)" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Servers.DNSUDPServer" />
+      <module name="Project6_DNSUDP" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="Servers.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="DNSUDPServer (4)" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Servers.DNSUDPServer" />
+      <module name="Project6_DNSUDP" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="Servers.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="DNSUDPServer" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Servers.DNSUDPServer" />
+      <module name="Project6_DNSUDP" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="Servers.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <list>
-      <item itemvalue="Application.DNSMessageCreateSendParse" />
+      <item itemvalue="Application.DNSUDPServer (2)" />
+      <item itemvalue="Application.DNSUDPServer (3)" />
+      <item itemvalue="Application.DNSUDPServer (4)" />
       <item itemvalue="Application.DNSUDPClient" />
+      <item itemvalue="Application.DNSUDPServer" />
     </list>
     <recent_temporary>
       <list>
         <item itemvalue="Application.DNSUDPClient" />
-        <item itemvalue="Application.DNSMessageCreateSendParse" />
+        <item itemvalue="Application.DNSUDPServer" />
+        <item itemvalue="Application.DNSUDPServer (4)" />
+        <item itemvalue="Application.DNSUDPServer (3)" />
+        <item itemvalue="Application.DNSUDPServer (2)" />
       </list>
     </recent_temporary>
   </component>

@@ -9,10 +9,8 @@ import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 public class DNSMessageCreateSendParse {
-    public static void main(String[] args) throws IOException {
-        parseDnsResponse(sendDnsRequest(createDnsMessage("google.com"),"8.8.8.8",53));
-    }
-    public static void SendDnsRequest(String domain, String ip, int port) throws IOException {
+
+    public static void ClientDNS(String domain, String ip, int port) throws IOException {
         parseDnsResponse(sendDnsRequest(createDnsMessage(domain),ip,port));
 
 
@@ -63,45 +61,17 @@ public class DNSMessageCreateSendParse {
         }
     return dnsFrame;
     }
-//    public static byte[] sendDnsRequest(byte[] dnsMessage, String ipaddressoftheserver,int port) throws IOException {
-//        DatagramSocket socket = new DatagramSocket();
-//        DatagramPacket dnsReqPacket = new DatagramPacket(dnsMessage, dnsMessage.length, InetAddress.getByName(ipaddressoftheserver), port);
-//        socket.send(dnsReqPacket);
-//
-//
-//        byte[] response = new byte[1024];
-//        DatagramPacket packet = new DatagramPacket(response, response.length);
-//        socket.receive(packet);
-//        System.out.println("\n\nReceived: " + packet.getLength() + " bytes");
-//        for (int i = 0; i < packet.getLength(); i++) {
-//            System.out.print(String.format("%s", response[i]) + " ");
-//        }
-//        System.out.println("\n");
-//        return response;
-//    }
-
     public static byte[] sendDnsRequest(byte[] dnsMessage, String ipaddressoftheserver,int port) throws IOException {
         DatagramSocket socket = new DatagramSocket();
-        InetAddress address = InetAddress.getByName("8.8.8.8");
         DatagramPacket request = new DatagramPacket(dnsMessage, dnsMessage.length, InetAddress.getByName(ipaddressoftheserver), port);
-        //DatagramPacket request = new DatagramPacket(dnsMessage, dnsMessage.length, address, port);
         socket.send(request);
-
         byte[] responseBuffer = new byte[512];
         DatagramPacket response = new DatagramPacket(responseBuffer, responseBuffer.length);
         socket.receive(response);
         socket.close();
-
         return response.getData();
     }
-
     public static void parseDnsResponse(byte[] response) throws IOException {
-//        System.out.println("\n\nReceived: " + packet.getLength() + " bytes");
-//        for (int i = 0; i < packet.getLength(); i++) {
-//            System.out.print(String.format("%s", response[i]) + " ");
-//        }
-//        System.out.println("\n");
-
         DataInputStream dataInputStream = new DataInputStream(new ByteArrayInputStream(response));
         System.out.println("\n\nStart response decode");
         System.out.println("Transaction ID: " + dataInputStream.readShort()); // ID
