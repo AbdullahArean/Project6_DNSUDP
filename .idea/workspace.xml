@@ -7,11 +7,9 @@
     <list default="true" id="874ad7e0-3916-4a71-9cd4-737cbfd7b688" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dns_records_auth.txt" beforeDir="false" afterPath="$PROJECT_DIR$/dns_records_auth.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/DNSMessage.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/DnsRequestSender.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Clients/DNSUDPClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Clients/DNSUDPClient.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Servers/DNSUDPServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Servers/DNSUDPServer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Testresolver.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Utils/DNSMessageCreateSendParse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Utils/DNSMessageCreateSendParse.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -86,7 +84,7 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="DNSUDPServer (2)" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+    <configuration name="DNSUDPServer (3)" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Servers.DNSUDPServer" />
       <module name="Project6_DNSUDP" />
       <extension name="coverage">
@@ -126,7 +124,7 @@
       </method>
     </configuration>
     <list>
-      <item itemvalue="Application.DNSUDPServer (2)" />
+      <item itemvalue="Application.DNSUDPServer (3)" />
       <item itemvalue="Application.DNSUDPServer (1)" />
       <item itemvalue="Application.DNSUDPServer (4)" />
       <item itemvalue="Application.DNSUDPClient" />
@@ -135,10 +133,10 @@
     <recent_temporary>
       <list>
         <item itemvalue="Application.DNSUDPClient" />
-        <item itemvalue="Application.DNSUDPServer (2)" />
         <item itemvalue="Application.DNSUDPServer (4)" />
         <item itemvalue="Application.DNSUDPServer (1)" />
         <item itemvalue="Application.DNSUDPServer" />
+        <item itemvalue="Application.DNSUDPServer (3)" />
       </list>
     </recent_temporary>
   </component>
@@ -151,7 +149,8 @@
       <option name="presentableId" value="Default" />
       <updated>1676341733464</updated>
       <workItem from="1676341735426" duration="2230000" />
-      <workItem from="1676358471034" duration="6074000" />
+      <workItem from="1676358471034" duration="6283000" />
+      <workItem from="1676367526645" duration="1197000" />
     </task>
     <servers />
   </component>

@@ -18,7 +18,7 @@ public class DNSUDPClient {
                 System.out.print("Enter a domain name to resolve: (\"exit\" to stop the Client)\n[Type & Press Enter]-> ");
                 String data = inputscanner.nextLine();
                 if (data.equals("exit") || data.equals("Exit") || data.equals("e")) break;
-                DNSMessageCreateSendParse.ClientDNS(data, ipaddressoftheserver, port);
+                DNSMessageCreateSendParse.ClientDNS(data, (short) 1, ipaddressoftheserver, port);
 
             }
         } catch (Exception e) {

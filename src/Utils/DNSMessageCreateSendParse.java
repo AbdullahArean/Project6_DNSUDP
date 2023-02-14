@@ -10,12 +10,12 @@ import java.util.*;
 
 public class DNSMessageCreateSendParse {
 
-    public static void ClientDNS(String domain, String ip, int port) throws IOException {
-        parseDnsResponse(sendDnsRequest(createDnsMessage(domain),ip,port));
+    public static void ClientDNS(String domain, short type, String ip, int port) throws IOException {
+        parseDnsResponse(sendDnsRequest(createDnsMessage(domain, type),ip,port));
 
 
     }
-    public static byte[] createDnsMessage(String domain) throws IOException {
+    public static byte[] createDnsMessage(String domain, short giventype) throws IOException {
 
         Random random = new Random();
         short ID = (short)random.nextInt(32767);
@@ -48,7 +48,7 @@ public class DNSMessageCreateSendParse {
         // No more parts
         dataOutputStream.writeByte(0);
         // Type 0x01 = A (Host Request)
-        dataOutputStream.writeShort(1);
+        dataOutputStream.writeShort(giventype);
         // Class 0x01 = IN
         dataOutputStream.writeShort(1);
 

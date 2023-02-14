@@ -7,8 +7,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.net.*;
-import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -59,7 +59,7 @@ public class DNSUDPServer {
     public static class DNSUDPHandler implements Runnable {
         private final DatagramSocket serverSocket;
         private final DatagramPacket receivePacket;
-        private static DnsRecord[] localstorage;
+        public static ArrayList<DnsRecord> localstorage;
 
 
         public DNSUDPHandler(DatagramSocket serverSocket, DatagramPacket receivePacket) {
@@ -73,7 +73,7 @@ public class DNSUDPServer {
                 byte[] sendData = handleDNSRequest(receivePacket.getData());
                 DatagramPacket sendPacket = new DatagramPacket(sendData, sendData.length, receivePacket.getAddress(), receivePacket.getPort());
                 serverSocket.send(sendPacket);
-            } catch (Exception e) {
+                } catch (Exception e) {
                 System.out.println("Server Failed: (handler) " + e.getMessage());
             }
         }
@@ -124,7 +124,14 @@ public class DNSUDPServer {
             }
             QNAME = QNAME.substring(0, QNAME.length() - 1); // remove trailing period
             System.out.println("Hostname: " + QNAME);
-
+            String ip = " ";
+            int k;
+            localstorage = DnsRecord.readRecordsFromFile("dns_records_auth.txt");
+            for(k=0; k<localstorage.size(); k++){
+                if(localstorage.get(k).getName().equals(QNAME)){
+                    ip=localstorage.get(k).getValue();break;
+                }
+            }
             short QTYPE = dataInputStream.readShort();
             short QCLASS = dataInputStream.readShort();
             System.out.println("Record Type: " + String.format("%s", QTYPE));
@@ -134,15 +141,19 @@ public class DNSUDPServer {
             ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
             DataOutputStream dataOutputStream = new DataOutputStream(outputStream);
 
-// Write header
+            // Write header
             dataOutputStream.writeShort(tid); // ID
             dataOutputStream.writeShort(0x8180); // Flags
             dataOutputStream.writeShort(1); // Questions
-            dataOutputStream.writeShort(1); // Answers RRs
+            if(ip!=" "){
+                dataOutputStream.writeShort(1);// Answers RRs
+
+            }
+            else dataOutputStream.writeShort(0); // Answers RRs
             dataOutputStream.writeShort(0); // Authority RRs
             dataOutputStream.writeShort(0); // Additional RRs
 
-// Write query
+            // Write query
             String[] domainParts = QNAME.split("\\.");
 
             int queryLength = 0;
@@ -152,26 +163,28 @@ public class DNSUDPServer {
                 dataOutputStream.write(domainBytes);
                 queryLength += domainBytes.length + 1;
             }
-// No more parts
+            // No more parts
             dataOutputStream.writeByte(0);
             queryLength++;
 
-// Type 0x01 = A (Host Request)
+            // Type 0x01 = A (Host Request)
             dataOutputStream.writeShort(QTYPE);
-// Class 0x01 = IN
+            // Class 0x01 = IN
             dataOutputStream.writeShort(QCLASS);
+            // Write answer
+            if(ip!=" "){
+                // Find the position of the name in the DNS response
+                int namePos = 12 + queryLength + 4; // 12 bytes for header, query length, and 4 bytes for type and class
+                int offset = namePos - 12; // offset from start of message (12 bytes)
+                dataOutputStream.writeShort(0xc000 | offset); // set first two bits to 11
+                dataOutputStream.writeShort(0x0001); // Type
+                dataOutputStream.writeShort(0x0001); // Class
+                dataOutputStream.writeInt(localstorage.get(k).getTTL()); // TTL
+                dataOutputStream.writeShort(0x0004); // Data length
+                InetAddress inetAddress = InetAddress.getByName(ip);
+                dataOutputStream.write(inetAddress.getAddress());
+            }
 
-// Write answer
-// Find the position of the name in the DNS response
-            int namePos = 12 + queryLength + 4; // 12 bytes for header, query length, and 4 bytes for type and class
-            int offset = namePos - 12; // offset from start of message (12 bytes)
-            dataOutputStream.writeShort(0xc000 | offset); // set first two bits to 11
-            dataOutputStream.writeShort(0x0001); // Type
-            dataOutputStream.writeShort(0x0001); // Class
-            dataOutputStream.writeInt(0x00000100); // TTL
-            dataOutputStream.writeShort(0x0004); // Data length
-            InetAddress inetAddress = InetAddress.getByName("1.2.3.4");
-            dataOutputStream.write(inetAddress.getAddress());
 
             return outputStream.toByteArray();
         }
