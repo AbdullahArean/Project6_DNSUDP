@@ -1,5 +1,7 @@
 package Servers;
 
+import Utils.DnsRecord;
+
 import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;
 import java.net.*;
@@ -55,7 +57,7 @@ public class DNSUDPServer {
     public static class DNSUDPHandler implements Runnable {
         private final DatagramSocket serverSocket;
         private final DatagramPacket receivePacket;
-        //private static DnsRecord[] localstorage;
+        private static DnsRecord[] localstorage;
 
 
         public DNSUDPHandler(DatagramSocket serverSocket, DatagramPacket receivePacket) {
@@ -66,8 +68,6 @@ public class DNSUDPServer {
         @Override
         public void run() {
             try {
-//                String domainName = new String(receivePacket.getData(), 0, receivePacket.getLength());
-//                System.out.println("Request Received:[" + System.currentTimeMillis() + "] " + domainName);
                 byte[] sendData = handleDNSRequest(receivePacket.getData());
                 DatagramPacket sendPacket = new DatagramPacket(sendData, sendData.length, receivePacket.getAddress(), receivePacket.getPort());
                 serverSocket.send(sendPacket);
