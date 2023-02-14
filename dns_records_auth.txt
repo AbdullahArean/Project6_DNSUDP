@@ -12,3 +12,4 @@ cse.du.ac.bd.	10	type	60
 mail.cse.du.ac.bd.	192.0.2.4	A	60
 mail.cse.du.ac.bd.	2001:db8::4	AAAA	60
 google.com	8.8.8.8	A	60
+google.com	8.8.8.8	A	60

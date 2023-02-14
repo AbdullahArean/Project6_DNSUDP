@@ -3,7 +3,9 @@ package Servers;
 import Utils.DnsRecord;
 
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.net.*;
 import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
@@ -79,7 +81,8 @@ public class DNSUDPServer {
         public static byte[] handleDNSRequest(byte[] request) throws Exception {
             DataInputStream dataInputStream = new DataInputStream(new ByteArrayInputStream(request));
             System.out.println("\n\nStart response decode");
-            System.out.println("Transaction ID: " + dataInputStream.readShort()); // ID
+            short tid = dataInputStream.readShort();
+            System.out.println("Transaction ID: " + tid); // ID
             short flags = dataInputStream.readByte();
             int QR = (flags & 0b10000000) >>> 7;
             int opCode = (flags & 0b01111000) >>> 3;
@@ -117,71 +120,60 @@ public class DNSUDPServer {
                 for (int i = 0; i < recLen; i++) {
                     record[i] = dataInputStream.readByte();
                 }
-                QNAME = new String(record, StandardCharsets.UTF_8);
+                QNAME += new String(record, StandardCharsets.UTF_8) + ".";
             }
-            StringBuilder ip = new StringBuilder();
-            StringBuilder domainSb = new StringBuilder();
-            for(byte ipPart:record) {
-                ip.append(ipPart).append(".");
-            }
+            QNAME = QNAME.substring(0, QNAME.length() - 1); // remove trailing period
+            System.out.println("Hostname: " + QNAME);
+
             short QTYPE = dataInputStream.readShort();
             short QCLASS = dataInputStream.readShort();
-            System.out.println("Record: " + QNAME);
             System.out.println("Record Type: " + String.format("%s", QTYPE));
             System.out.println("Class: " + String.format("%s", QCLASS));
 
+            // Construct DNS response
+            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+            DataOutputStream dataOutputStream = new DataOutputStream(outputStream);
 
-//            ByteBuffer requestBuffer = ByteBuffer.wrap(request);
-//            short transactionID = requestBuffer.getShort();
-//            short flags = requestBuffer.get();
-//            short questions = 1;
-//            short answers = requestBuffer.getShort();
-//            short authorities = requestBuffer.getShort();
-//            short additionals = requestBuffer.getShort();
-//
-//
-//            ByteBuffer responseBuffer = null;
-//            for (int i = 0; i < questions; i++) {
-//                StringBuilder hostname = new StringBuilder();
-//                int length = requestBuffer.getInt() & 0xff;
-//                while (length != 0) {
-//                    for (int j = 0; j < length; j++) {
-//                        hostname.append(requestBuffer.getChar());
-//                    }
-//                    hostname.append(".");
-//                    length = requestBuffer.getInt() & 0xff;
-//                }
-//                System.out.println(hostname+"hohoo");
-//                System.out.println("adfaldfasl");
-//                short type = requestBuffer.getShort();
-//                short questionClass = requestBuffer.getShort();
-//
-//                responseBuffer = ByteBuffer.allocate(512);
-//                responseBuffer.putShort(transactionID);
-//                responseBuffer.putShort((short) 0x8180);
-//                responseBuffer.putShort((short) 1);
-//                responseBuffer.putShort((short) 1);
-//                responseBuffer.putShort((short) 0);
-//                responseBuffer.putShort((short) 0);
-//
-//                String[] domainParts = hostname.toString().split("\\.");
-//                for (String domainPart : domainParts) {
-//                    responseBuffer.put((byte) domainPart.length());
-//                    responseBuffer.put(domainPart.getBytes());
-//                }
-//
-//                responseBuffer.put((byte) 0x00);
-//                responseBuffer.putShort(type);
-//                responseBuffer.putShort(questionClass);
-//                responseBuffer.putShort((short) 60);
-//                responseBuffer.putShort((short) 4);
-//                responseBuffer.put(InetAddress.getByName("192.12.12.12").getAddress());
-//
-//
-//            }
-//            return responseBuffer.array();
-//        }
-            return request;
+// Write header
+            dataOutputStream.writeShort(tid); // ID
+            dataOutputStream.writeShort(0x8180); // Flags
+            dataOutputStream.writeShort(1); // Questions
+            dataOutputStream.writeShort(1); // Answers RRs
+            dataOutputStream.writeShort(0); // Authority RRs
+            dataOutputStream.writeShort(0); // Additional RRs
+
+// Write query
+            String[] domainParts = QNAME.split("\\.");
+
+            int queryLength = 0;
+            for (int i = 0; i < domainParts.length; i++) {
+                byte[] domainBytes = domainParts[i].getBytes(StandardCharsets.UTF_8);
+                dataOutputStream.writeByte(domainBytes.length);
+                dataOutputStream.write(domainBytes);
+                queryLength += domainBytes.length + 1;
+            }
+// No more parts
+            dataOutputStream.writeByte(0);
+            queryLength++;
+
+// Type 0x01 = A (Host Request)
+            dataOutputStream.writeShort(QTYPE);
+// Class 0x01 = IN
+            dataOutputStream.writeShort(QCLASS);
+
+// Write answer
+// Find the position of the name in the DNS response
+            int namePos = 12 + queryLength + 4; // 12 bytes for header, query length, and 4 bytes for type and class
+            int offset = namePos - 12; // offset from start of message (12 bytes)
+            dataOutputStream.writeShort(0xc000 | offset); // set first two bits to 11
+            dataOutputStream.writeShort(0x0001); // Type
+            dataOutputStream.writeShort(0x0001); // Class
+            dataOutputStream.writeInt(0x00000100); // TTL
+            dataOutputStream.writeShort(0x0004); // Data length
+            InetAddress inetAddress = InetAddress.getByName("1.2.3.4");
+            dataOutputStream.write(inetAddress.getAddress());
+
+            return outputStream.toByteArray();
         }
     }
 }
