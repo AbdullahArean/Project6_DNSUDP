@@ -5,9 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="874ad7e0-3916-4a71-9cd4-737cbfd7b688" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/dns_rec_resolver.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dns_it_resolver.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dns_it_root.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dns_it_td_bd.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dns_records_it_auth.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Iterative/AuthDNSServercsedu.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Iterative/DNSIterativeResolver.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Iterative/RootDNSServer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Iterative/TLDDNSServerbd.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Utils/DNSMessageCreateSendParse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Utils/DNSMessageCreateSendParse.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -28,13 +34,16 @@
     <option name="stateVersion" value="1" />
   </component>
   <component name="ProjectId" id="2Li6oO8Ijp4hxa4dACi3mibKEqb" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
     "Downloaded.Files.Path.Enabled": "false",
     "Repository.Attach.Annotations": "false",
     "Repository.Attach.JavaDocs": "false",
@@ -42,7 +51,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "/Users/abdullaharean/Desktop/Project6_DNSUDP",
+    "last_opened_file_path": "/Users/abdullaharean/Desktop/Project6_DNSUDP/src/Iterative",
     "node.js.detected.package.eslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
@@ -52,8 +61,9 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$" />
+      <recent name="$PROJECT_DIR$/src/Iterative" />
       <recent name="$PROJECT_DIR$/src" />
+      <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/src/Recursive" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
@@ -66,39 +76,13 @@
       <recent name="Recursive" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.AuthDNSServercsedu">
-    <configuration name="AuthDNSServer (1)" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="Iterative.AuthDNSServer" />
-      <module name="Project6_DNSUDP" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="Iterative.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="AuthDNSServer" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="Iterative.AuthDNSServer" />
-      <module name="Project6_DNSUDP" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="Iterative.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
+  <component name="RunManager" selected="Application.RootDNSServer (1)">
     <configuration name="AuthDNSServercsedu" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="Recursive.AuthDNSServercsedu" />
+      <option name="MAIN_CLASS_NAME" value="Iterative.AuthDNSServercsedu" />
       <module name="Project6_DNSUDP" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="Recursive.*" />
+          <option name="PATTERN" value="Iterative.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -106,25 +90,12 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="DNSIterativeResolver (1)" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+    <configuration name="DNSIterativeResolver" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Iterative.DNSIterativeResolver" />
       <module name="Project6_DNSUDP" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="Iterative.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="DNSRecursiveResolver" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="Recursive.DNSRecursiveResolver" />
-      <module name="Project6_DNSUDP" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="Recursive.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -145,25 +116,12 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="DNSUDPServer" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="Servers.DNSUDPServer" />
+    <configuration name="RootDNSServer (1)" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Iterative.RootDNSServer" />
       <module name="Project6_DNSUDP" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="Servers.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="RootDNSServer" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="Recursive.RootDNSServer" />
-      <module name="Project6_DNSUDP" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="Recursive.*" />
+          <option name="PATTERN" value="Iterative.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -172,11 +130,11 @@
       </method>
     </configuration>
     <configuration name="TLDDNSServerbd" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="Recursive.TLDDNSServerbd" />
+      <option name="MAIN_CLASS_NAME" value="Iterative.TLDDNSServerbd" />
       <module name="Project6_DNSUDP" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="Recursive.*" />
+          <option name="PATTERN" value="Iterative.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -185,19 +143,19 @@
       </method>
     </configuration>
     <list>
+      <item itemvalue="Application.DNSIterativeResolver" />
+      <item itemvalue="Application.RootDNSServer (1)" />
       <item itemvalue="Application.AuthDNSServercsedu" />
-      <item itemvalue="Application.DNSRecursiveResolver" />
-      <item itemvalue="Application.RootDNSServer" />
       <item itemvalue="Application.TLDDNSServerbd" />
       <item itemvalue="Application.DNSUDPClient" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.RootDNSServer (1)" />
+        <item itemvalue="Application.DNSIterativeResolver" />
+        <item itemvalue="Application.DNSUDPClient" />
         <item itemvalue="Application.AuthDNSServercsedu" />
         <item itemvalue="Application.TLDDNSServerbd" />
-        <item itemvalue="Application.RootDNSServer" />
-        <item itemvalue="Application.DNSRecursiveResolver" />
-        <item itemvalue="Application.DNSUDPClient" />
       </list>
     </recent_temporary>
   </component>
@@ -218,5 +176,8 @@
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
   </component>
 </project>
