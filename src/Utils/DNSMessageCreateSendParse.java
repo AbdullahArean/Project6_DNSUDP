@@ -11,14 +11,27 @@ import java.util.*;
 public class DNSMessageCreateSendParse {
 
     public static void ClientDNS(String domain, short type, String ip, int port) throws IOException {
-        parseDnsResponse(sendDnsRequest(createDnsMessage(domain, type),ip,port));
+        parseDnsResponse(sendDnsRequest(createDnsMessage(domain, type), ip, port));
 
 
     }
+
+    public static byte[] ServerDNS2(String domain, short type, String ip, int port) throws IOException {
+        return sendDnsRequest(createDnsMessage(domain, type), ip, port);
+
+
+    }
+
+    public static ArrayList<DnsRecord> ServerDNS(String domain, short type, String ip, int port) throws IOException {
+        return DNSReturn(sendDnsRequest(createDnsMessage(domain, type), ip, port));
+
+
+    }
+
     public static byte[] createDnsMessage(String domain, short giventype) throws IOException {
 
         Random random = new Random();
-        short ID = (short)random.nextInt(32767);
+        short ID = (short) random.nextInt(32767);
         System.out.println(ID);
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         DataOutputStream dataOutputStream = new DataOutputStream(byteArrayOutputStream);
@@ -59,9 +72,10 @@ public class DNSMessageCreateSendParse {
             System.out.print(String.format("%s", dnsFrame[i]) + " ");
 
         }
-    return dnsFrame;
+        return dnsFrame;
     }
-    public static byte[] sendDnsRequest(byte[] dnsMessage, String ipaddressoftheserver,int port) throws IOException {
+
+    public static byte[] sendDnsRequest(byte[] dnsMessage, String ipaddressoftheserver, int port) throws IOException {
         DatagramSocket socket = new DatagramSocket();
         DatagramPacket request = new DatagramPacket(dnsMessage, dnsMessage.length, InetAddress.getByName(ipaddressoftheserver), port);
         socket.send(request);
@@ -71,35 +85,36 @@ public class DNSMessageCreateSendParse {
         socket.close();
         return response.getData();
     }
+
     public static void parseDnsResponse(byte[] response) throws IOException {
         DataInputStream dataInputStream = new DataInputStream(new ByteArrayInputStream(response));
         System.out.println("\n\nStart response decode");
         System.out.println("Transaction ID: " + dataInputStream.readShort()); // ID
         short flags = dataInputStream.readByte();
         int QR = (flags & 0b10000000) >>> 7;
-        int opCode = ( flags & 0b01111000) >>> 3;
-        int AA = ( flags & 0b00000100) >>> 2;
-        int TC = ( flags & 0b00000010) >>> 1;
+        int opCode = (flags & 0b01111000) >>> 3;
+        int AA = (flags & 0b00000100) >>> 2;
+        int TC = (flags & 0b00000010) >>> 1;
         int RD = flags & 0b00000001;
-        System.out.println("QR "+QR);
-        System.out.println("Opcode "+opCode);
-        System.out.println("AA "+AA);
-        System.out.println("TC "+TC);
-        System.out.println("RD "+RD);
+        System.out.println("QR " + QR);
+        System.out.println("Opcode " + opCode);
+        System.out.println("AA " + AA);
+        System.out.println("TC " + TC);
+        System.out.println("RD " + RD);
         flags = dataInputStream.readByte();
         int RA = (flags & 0b10000000) >>> 7;
-        int Z = ( flags & 0b01110000) >>> 4;
+        int Z = (flags & 0b01110000) >>> 4;
         int RCODE = flags & 0b00001111;
-        System.out.println("RA "+RA);
-        System.out.println("Z "+ Z);
-        System.out.println("RCODE " +RCODE);
+        System.out.println("RA " + RA);
+        System.out.println("Z " + Z);
+        System.out.println("RCODE " + RCODE);
 
         short QDCOUNT = dataInputStream.readShort();
         short ANCOUNT = dataInputStream.readShort();
         short NSCOUNT = dataInputStream.readShort();
         short ARCOUNT = dataInputStream.readShort();
 
-        System.out.println("Questions: " + String.format("%s",QDCOUNT ));
+        System.out.println("Questions: " + String.format("%s", QDCOUNT));
         System.out.println("Answers RRs: " + String.format("%s", ANCOUNT));
         System.out.println("Authority RRs: " + String.format("%s", NSCOUNT));
         System.out.println("Additional RRs: " + String.format("%s", ARCOUNT));
@@ -130,19 +145,19 @@ public class DNSMessageCreateSendParse {
         Map<String, String> domainToIp = new HashMap<>();
         String ipFinal = null;
 
-        for(int i = 0; i < ANCOUNT; i++) {
-            if(firstTwoBits == 3) {
+        for (int i = 0; i < ANCOUNT; i++) {
+            if (firstTwoBits == 3) {
                 byte currentByte = dataInputStream.readByte();
                 boolean stop = false;
                 byte[] newArray = Arrays.copyOfRange(response, currentByte, response.length);
                 DataInputStream sectionDataInputStream = new DataInputStream(new ByteArrayInputStream(newArray));
                 ArrayList<Integer> RDATA = new ArrayList<>();
                 ArrayList<String> DOMAINS = new ArrayList<>();
-                while(!stop) {
+                while (!stop) {
                     byte nextByte = sectionDataInputStream.readByte();
-                    if(nextByte != 0) {
+                    if (nextByte != 0) {
                         byte[] currentLabel = new byte[nextByte];
-                        for(int j = 0; j < nextByte; j++) {
+                        for (int j = 0; j < nextByte; j++) {
                             currentLabel[j] = sectionDataInputStream.readByte();
                         }
                         label.write(currentLabel);
@@ -152,7 +167,7 @@ public class DNSMessageCreateSendParse {
                         short CLASS = dataInputStream.readShort();
                         int TTL = dataInputStream.readInt();
                         int RDLENGTH = dataInputStream.readShort();
-                        for(int s = 0; s < RDLENGTH; s++) {
+                        for (int s = 0; s < RDLENGTH; s++) {
                             int nx = dataInputStream.readByte() & 255;// and with 255 to
                             RDATA.add(nx);
                         }
@@ -169,39 +184,39 @@ public class DNSMessageCreateSendParse {
 
                 StringBuilder ip = new StringBuilder();
                 StringBuilder domainSb = new StringBuilder();
-                for(Integer ipPart:RDATA) {
+                for (Integer ipPart : RDATA) {
                     ip.append(ipPart).append(".");
                 }
 
-                for(String domainPart:DOMAINS) {
-                    if(!domainPart.equals("")) {
+                for (String domainPart : DOMAINS) {
+                    if (!domainPart.equals("")) {
                         domainSb.append(domainPart).append(".");
                     }
                 }
                 String domainFinal = domainSb.toString();
                 ipFinal = ip.toString();
-                domainToIp.put(ipFinal.substring(0, ipFinal.length()-1), QNAME);
+                domainToIp.put(ipFinal.substring(0, ipFinal.length() - 1), QNAME);
 
-            }else if(firstTwoBits == 0){
+            } else if (firstTwoBits == 0) {
                 System.out.println("It's a label");
             }
 
             firstBytes = dataInputStream.readByte();
             firstTwoBits = (firstBytes & 0b11000000) >>> 6;
         }
-        for(int i = 0; i < NSCOUNT; i++) {
-            if(firstTwoBits == 3) {
+        for (int i = 0; i < NSCOUNT; i++) {
+            if (firstTwoBits == 3) {
                 byte currentByte = dataInputStream.readByte();
                 boolean stop = false;
                 byte[] newArray = Arrays.copyOfRange(response, currentByte, response.length);
                 DataInputStream sectionDataInputStream = new DataInputStream(new ByteArrayInputStream(newArray));
                 ArrayList<Integer> RDATA = new ArrayList<>();
                 ArrayList<String> DOMAINS = new ArrayList<>();
-                while(!stop) {
+                while (!stop) {
                     byte nextByte = sectionDataInputStream.readByte();
-                    if(nextByte != 0) {
+                    if (nextByte != 0) {
                         byte[] currentLabel = new byte[nextByte];
-                        for(int j = 0; j < nextByte; j++) {
+                        for (int j = 0; j < nextByte; j++) {
                             currentLabel[j] = sectionDataInputStream.readByte();
                         }
                         label.write(currentLabel);
@@ -211,7 +226,7 @@ public class DNSMessageCreateSendParse {
                         short CLASS = dataInputStream.readShort();
                         int TTL = dataInputStream.readInt();
                         int RDLENGTH = dataInputStream.readShort();
-                        for(int s = 0; s < RDLENGTH; s++) {
+                        for (int s = 0; s < RDLENGTH; s++) {
                             int nx = dataInputStream.readByte() & 255;// and with 255 to
                             RDATA.add(nx);
                         }
@@ -228,20 +243,20 @@ public class DNSMessageCreateSendParse {
 
                 StringBuilder ip = new StringBuilder();
                 StringBuilder domainSb = new StringBuilder();
-                for(Integer ipPart:RDATA) {
+                for (Integer ipPart : RDATA) {
                     ip.append(ipPart).append(".");
                 }
 
-                for(String domainPart:DOMAINS) {
-                    if(!domainPart.equals("")) {
+                for (String domainPart : DOMAINS) {
+                    if (!domainPart.equals("")) {
                         domainSb.append(domainPart).append(".");
                     }
                 }
                 String domainFinal = domainSb.toString();
                 ipFinal = ip.toString();
-                domainToIp.put(ipFinal.substring(0, ipFinal.length()-1), domainFinal.substring(0, domainFinal.length()-1));
+                domainToIp.put(ipFinal.substring(0, ipFinal.length() - 1), domainFinal.substring(0, domainFinal.length() - 1));
 
-            }else if(firstTwoBits == 0){
+            } else if (firstTwoBits == 0) {
                 System.out.println("It's a label");
             }
 
@@ -249,9 +264,137 @@ public class DNSMessageCreateSendParse {
             firstTwoBits = (firstBytes & 0b11000000) >>> 6;
         }
         domainToIp.forEach((key, value) -> System.out.println(key + " : " + value));
+    }
+
+    public static ArrayList<DnsRecord> DNSReturn(byte[] response) throws IOException {
+        ArrayList<DnsRecord> Result = new ArrayList<>();
+
+        DataInputStream dataInputStream = new DataInputStream(new ByteArrayInputStream(response));
+        System.out.println("\n\nStart response decode");
+        System.out.println("Transaction ID: " + dataInputStream.readShort()); // ID
+        short flags = dataInputStream.readByte();
+        int QR = (flags & 0b10000000) >>> 7;
+        int opCode = (flags & 0b01111000) >>> 3;
+        int AA = (flags & 0b00000100) >>> 2;
+        int TC = (flags & 0b00000010) >>> 1;
+        int RD = flags & 0b00000001;
+        System.out.println("QR " + QR);
+        System.out.println("Opcode " + opCode);
+        System.out.println("AA " + AA);
+        System.out.println("TC " + TC);
+        System.out.println("RD " + RD);
+        flags = dataInputStream.readByte();
+        int RA = (flags & 0b10000000) >>> 7;
+        int Z = (flags & 0b01110000) >>> 4;
+        int RCODE = flags & 0b00001111;
+        System.out.println("RA " + RA);
+        System.out.println("Z " + Z);
+        System.out.println("RCODE " + RCODE);
+
+        short QDCOUNT = dataInputStream.readShort();
+        short ANCOUNT = dataInputStream.readShort();
+        short NSCOUNT = dataInputStream.readShort();
+        short ARCOUNT = dataInputStream.readShort();
+
+        System.out.println("Questions: " + String.format("%s", QDCOUNT));
+        System.out.println("Answers RRs: " + String.format("%s", ANCOUNT));
+        System.out.println("Authority RRs: " + String.format("%s", NSCOUNT));
+        System.out.println("Additional RRs: " + String.format("%s", ARCOUNT));
+
+        String QNAME = "";
+        int recLen;
+        byte[] record = new byte[0];
+        while ((recLen = dataInputStream.readByte()) > 0) {
+            record = new byte[recLen];
+            for (int i = 0; i < recLen; i++) {
+                record[i] = dataInputStream.readByte();
+            }
+            QNAME += new String(record, StandardCharsets.UTF_8) + ".";
+        }
+        QNAME = QNAME.substring(0, QNAME.length() - 1);
+        short QTYPE = dataInputStream.readShort();
+        short QCLASS = dataInputStream.readShort();
+        System.out.println("Record: " + QNAME);
+        System.out.println("Record Type: " + String.format("%s", QTYPE));
+        System.out.println("Class: " + String.format("%s", QCLASS));
+
+        System.out.println("\n\nstart answer, authority, and additional sections\n");
+
+        byte firstBytes = dataInputStream.readByte();
+        int firstTwoBits = (firstBytes & 0b11000000) >>> 6;
+
+        ByteArrayOutputStream label = new ByteArrayOutputStream();
+        Map<String, String> domainToIp = new HashMap<>();
+        String ipFinal = null;
+
+        for (int i = 0; i < ANCOUNT; i++) {
+            if (firstTwoBits == 3) {
+                byte currentByte = dataInputStream.readByte();
+                boolean stop = false;
+                byte[] newArray = Arrays.copyOfRange(response, currentByte, response.length);
+                DataInputStream sectionDataInputStream = new DataInputStream(new ByteArrayInputStream(newArray));
+                ArrayList<Integer> RDATA = new ArrayList<>();
+                ArrayList<String> DOMAINS = new ArrayList<>();
+                int TTL = 0;
+                short TYPE = 0;
+
+                while (!stop) {
+                    byte nextByte = sectionDataInputStream.readByte();
+                    if (nextByte != 0) {
+                        byte[] currentLabel = new byte[nextByte];
+                        for (int j = 0; j < nextByte; j++) {
+                            currentLabel[j] = sectionDataInputStream.readByte();
+                        }
+                        label.write(currentLabel);
+                    } else {
+                        stop = true;
+                        TYPE = dataInputStream.readShort();
+                        short CLASS = dataInputStream.readShort();
+                        TTL = dataInputStream.readInt();
+                        int RDLENGTH = dataInputStream.readShort();
+                        for (int s = 0; s < RDLENGTH; s++) {
+                            int nx = dataInputStream.readByte() & 255;// and with 255 to
+                            RDATA.add(nx);
+                        }
+
+                        System.out.println("Type: " + TYPE);
+                        System.out.println("Class: " + CLASS);
+                        System.out.println("Time to live: " + TTL);
+                        System.out.println("Rd Length: " + RDLENGTH);
+                    }
+
+                    DOMAINS.add(label.toString(StandardCharsets.UTF_8));
+                    label.reset();
+                }
+
+                StringBuilder ip = new StringBuilder();
+                StringBuilder domainSb = new StringBuilder();
+                for (Integer ipPart : RDATA) {
+                    ip.append(ipPart).append(".");
+                }
+
+                for (String domainPart : DOMAINS) {
+                    if (!domainPart.equals("")) {
+                        domainSb.append(domainPart).append(".");
+                    }
+                }
+                String domainFinal = domainSb.toString();
+                ipFinal = ip.toString();
+                Result.add(new DnsRecord(QNAME,ipFinal.substring(0, ipFinal.length() - 1), (short) TYPE, (short) TTL));
+                domainToIp.put(ipFinal.substring(0, ipFinal.length() - 1), domainFinal.substring(0, domainFinal.length() - 1));
+
+            } else if (firstTwoBits == 0) {
+                System.out.println("It's a label");
+            }
+
+            firstBytes = dataInputStream.readByte();
+            firstTwoBits = (firstBytes & 0b11000000) >>> 6;
+        }
+        domainToIp.forEach((key, value) -> System.out.println(key + " : " + value));
+        return Result;
+    }
 
 }
-    }
 
 
 
