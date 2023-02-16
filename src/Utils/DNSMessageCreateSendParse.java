@@ -106,13 +106,15 @@ public class DNSMessageCreateSendParse {
 
         String QNAME = "";
         int recLen;
+        byte[] record = new byte[0];
         while ((recLen = dataInputStream.readByte()) > 0) {
-            byte[] record = new byte[recLen];
+            record = new byte[recLen];
             for (int i = 0; i < recLen; i++) {
                 record[i] = dataInputStream.readByte();
             }
-            QNAME = new String(record, StandardCharsets.UTF_8);
+            QNAME += new String(record, StandardCharsets.UTF_8) + ".";
         }
+        QNAME = QNAME.substring(0, QNAME.length() - 1);
         short QTYPE = dataInputStream.readShort();
         short QCLASS = dataInputStream.readShort();
         System.out.println("Record: " + QNAME);
@@ -126,6 +128,7 @@ public class DNSMessageCreateSendParse {
 
         ByteArrayOutputStream label = new ByteArrayOutputStream();
         Map<String, String> domainToIp = new HashMap<>();
+        String ipFinal = null;
 
         for(int i = 0; i < ANCOUNT; i++) {
             if(firstTwoBits == 3) {
@@ -176,7 +179,66 @@ public class DNSMessageCreateSendParse {
                     }
                 }
                 String domainFinal = domainSb.toString();
-                String ipFinal = ip.toString();
+                ipFinal = ip.toString();
+                domainToIp.put(ipFinal.substring(0, ipFinal.length()-1), QNAME);
+
+            }else if(firstTwoBits == 0){
+                System.out.println("It's a label");
+            }
+
+            firstBytes = dataInputStream.readByte();
+            firstTwoBits = (firstBytes & 0b11000000) >>> 6;
+        }
+        for(int i = 0; i < NSCOUNT; i++) {
+            if(firstTwoBits == 3) {
+                byte currentByte = dataInputStream.readByte();
+                boolean stop = false;
+                byte[] newArray = Arrays.copyOfRange(response, currentByte, response.length);
+                DataInputStream sectionDataInputStream = new DataInputStream(new ByteArrayInputStream(newArray));
+                ArrayList<Integer> RDATA = new ArrayList<>();
+                ArrayList<String> DOMAINS = new ArrayList<>();
+                while(!stop) {
+                    byte nextByte = sectionDataInputStream.readByte();
+                    if(nextByte != 0) {
+                        byte[] currentLabel = new byte[nextByte];
+                        for(int j = 0; j < nextByte; j++) {
+                            currentLabel[j] = sectionDataInputStream.readByte();
+                        }
+                        label.write(currentLabel);
+                    } else {
+                        stop = true;
+                        short TYPE = dataInputStream.readShort();
+                        short CLASS = dataInputStream.readShort();
+                        int TTL = dataInputStream.readInt();
+                        int RDLENGTH = dataInputStream.readShort();
+                        for(int s = 0; s < RDLENGTH; s++) {
+                            int nx = dataInputStream.readByte() & 255;// and with 255 to
+                            RDATA.add(nx);
+                        }
+
+                        System.out.println("Type: " + TYPE);
+                        System.out.println("Class: " + CLASS);
+                        System.out.println("Time to live: " + TTL);
+                        System.out.println("Rd Length: " + RDLENGTH);
+                    }
+
+                    DOMAINS.add(label.toString(StandardCharsets.UTF_8));
+                    label.reset();
+                }
+
+                StringBuilder ip = new StringBuilder();
+                StringBuilder domainSb = new StringBuilder();
+                for(Integer ipPart:RDATA) {
+                    ip.append(ipPart).append(".");
+                }
+
+                for(String domainPart:DOMAINS) {
+                    if(!domainPart.equals("")) {
+                        domainSb.append(domainPart).append(".");
+                    }
+                }
+                String domainFinal = domainSb.toString();
+                ipFinal = ip.toString();
                 domainToIp.put(ipFinal.substring(0, ipFinal.length()-1), domainFinal.substring(0, domainFinal.length()-1));
 
             }else if(firstTwoBits == 0){
@@ -186,7 +248,6 @@ public class DNSMessageCreateSendParse {
             firstBytes = dataInputStream.readByte();
             firstTwoBits = (firstBytes & 0b11000000) >>> 6;
         }
-
         domainToIp.forEach((key, value) -> System.out.println(key + " : " + value));
 
 }

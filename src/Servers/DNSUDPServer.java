@@ -124,14 +124,15 @@ public class DNSUDPServer {
             }
             QNAME = QNAME.substring(0, QNAME.length() - 1); // remove trailing period
             System.out.println("Hostname: " + QNAME);
-            String ip = " ";
             int k;
             localstorage = DnsRecord.readRecordsFromFile("dns_records_auth.txt");
+            ArrayList<Integer> ipmatched = new ArrayList<Integer>();
             for(k=0; k<localstorage.size(); k++){
                 if(localstorage.get(k).getName().equals(QNAME)){
-                    ip=localstorage.get(k).getValue();break;
+                    ipmatched.add(k);
                 }
             }
+            DnsRecord.writeRecordsToFile(localstorage,"dns_records_auth.txt");
             short QTYPE = dataInputStream.readShort();
             short QCLASS = dataInputStream.readShort();
             System.out.println("Record Type: " + String.format("%s", QTYPE));
@@ -145,11 +146,7 @@ public class DNSUDPServer {
             dataOutputStream.writeShort(tid); // ID
             dataOutputStream.writeShort(0x8180); // Flags
             dataOutputStream.writeShort(1); // Questions
-            if(ip!=" "){
-                dataOutputStream.writeShort(1);// Answers RRs
-
-            }
-            else dataOutputStream.writeShort(0); // Answers RRs
+            dataOutputStream.writeShort(ipmatched.size());// Answers RRs
             dataOutputStream.writeShort(0); // Authority RRs
             dataOutputStream.writeShort(0); // Additional RRs
 
@@ -172,20 +169,21 @@ public class DNSUDPServer {
             // Class 0x01 = IN
             dataOutputStream.writeShort(QCLASS);
             // Write answer
-            if(ip!=" "){
+            int count = 0;
+            while (count<ipmatched.size()){
                 // Find the position of the name in the DNS response
                 int namePos = 12 + queryLength + 4; // 12 bytes for header, query length, and 4 bytes for type and class
                 int offset = namePos - 12; // offset from start of message (12 bytes)
                 dataOutputStream.writeShort(0xc000 | offset); // set first two bits to 11
-                dataOutputStream.writeShort(0x0001); // Type
-                dataOutputStream.writeShort(0x0001); // Class
-                dataOutputStream.writeInt(localstorage.get(k).getTTL()); // TTL
-                dataOutputStream.writeShort(0x0004); // Data length
-                InetAddress inetAddress = InetAddress.getByName(ip);
-                dataOutputStream.write(inetAddress.getAddress());
+                dataOutputStream.writeShort(QTYPE); // Type
+                dataOutputStream.writeShort(QCLASS); // Class
+                dataOutputStream.writeInt(localstorage.get(ipmatched.get(count)).getTTL()); // TTL
+                InetAddress inetAddress = InetAddress.getByName(localstorage.get(ipmatched.get(count)).getValue());
+                byte[] ipAddressBytes = inetAddress.getAddress();
+                dataOutputStream.writeShort(ipAddressBytes.length); // Data length
+                dataOutputStream.write(ipAddressBytes);
+                count++;
             }
-
-
             return outputStream.toByteArray();
         }
     }
